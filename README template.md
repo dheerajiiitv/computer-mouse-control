@@ -37,8 +37,15 @@ Command line arguments -
 ## Benchmarks
 *TODO:* Include the benchmark results of running your model on multiple hardwares and multiple model precisions. Your benchmarks can include: model loading time, input/output processing time, model inference time etc.
 
+hardware 			precision  			Loading time   	 	 	Input/Output Processing time 		Model Inference time
+CPU                     FP16               0.97 seconds														4.9 seconds
+CPU                     FP32 			   1.15 seconds														5.7 seconds
+CPU                     FP32-INT8			4.2 seconds														5.3 seconds
+
 ## Results
 *TODO:* Discuss the benchmark results and explain why you are getting the results you are getting. For instance, explain why there is difference in inference time for FP32, FP16 and INT8 models.
+
+When we increase float point precision than the model size increases because FP32 take 32 bit of memory while fp16 takes 16 bit of memory, this increase loading time and as floating point increase inference time increases because now mathamatics operation will take more time. 
 
 ## Standout Suggestions
 *TODO (Optional):* This is where you can provide information about any standout suggestions that you have attempted.

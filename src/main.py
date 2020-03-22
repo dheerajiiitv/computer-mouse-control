@@ -37,6 +37,7 @@ def main():
 	
 		# Grab command line args
 		args = build_argparser().parse_args()
+		loading_st_time = time.time()
 		face_detection_model = face_detection.Model_X(model_name=args.fd_model, extensions=args.cpu_extension)
 		face_detection_model.load_model()
 		facial_landmark_detection_model = facial_landmark_detection.Model_X(model_name=args.fc_model, extensions=args.cpu_extension)
@@ -45,6 +46,9 @@ def main():
 		head_pose_estimation_model.load_model()
 		gaze_estimation_model = gaze_estimation.Model_X(model_name=args.ge_model, extensions=args.cpu_extension)
 		gaze_estimation_model.load_model()
+
+		print("Total model loading time", (time.time() - loading_st_time))
+
 		mouse_control  = MouseController(precision=args.precision, speed=args.speed)
 		if args.input:
 			print("In here")
@@ -62,6 +66,7 @@ def main():
 				left_eye,right_eye,_ = facial_landmark_detection_model.predict(face)
 				gaze_estimation_value = gaze_estimation_model.predict(left_eye, right_eye, head_pose_estimation_angle)
 				mouse_control.move(gaze_estimation_value[0], gaze_estimation_value[1])
+				print("Inference time, ", time.time() - st_time)
 			else:
 				print("No face detected in this batch")
 		feed.close()
